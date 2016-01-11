@@ -1,0 +1,193 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textHeaderLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="5dp"
+        android:text="Moon phases information"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/PhasesHeaderLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="5dp"
+        android:text="Phases"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/NewMoonLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="New moon:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textNewMoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=".........."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/FirstQuarterLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="First quarter:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textFirstQuarter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=".........."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/FullMoonLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Full moon:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textFullMoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=".........."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/LastQuarterLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Last quarter:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textLastQuarter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=".........."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/SunInfosHeaderLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="5dp"
+        android:text="Sun infos"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/SunriseLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sunrise:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textSunrise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=".........."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/SunsetLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sunset:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textSunset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=".........."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#5d5d5d"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+</LinearLayout>
