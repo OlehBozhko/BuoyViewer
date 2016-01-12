@@ -1,9 +1,8 @@
 package ua.org.shutl.buoyviewer.activity;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
 import ua.org.shutl.buoyviewer.model.shell.JsonResponseArray;
 import ua.org.shutl.buoyviewer.rest.RSClient;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     LocationItemDao locationItemDao = new LocationItemDaoImpl();
 
@@ -33,15 +32,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.buoy_info_toolbar);
-        setSupportActionBar(toolbar);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> updateRootListAndShow(view));
-
-        mSectionsPagerAdapter.loadRootList();
+        mSectionsPagerAdapter.showLocationItemRootList();
     }
 
     @Override
@@ -59,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onClickBackPage(View view) {
+        mSectionsPagerAdapter.previousPage();
+    }
+
     public void updateRootListAndShow(View view) {
         Call<JsonResponseArray<LocationItem>> call = RSClient.getApi().getLocationList();
         call.enqueue(new Callback<JsonResponseArray<LocationItem>>() {
@@ -70,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     locationItemDao.saveLocationItems(locationList.getResultArray());
                     Snackbar.make(view, "Data saved, updating list...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    mSectionsPagerAdapter.loadRootList();
+                    mSectionsPagerAdapter.showLocationItemRootList();
                 }
             }
 

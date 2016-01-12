@@ -66,6 +66,12 @@ public class MoonPhasesFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void initData(long id) {
         final String today = StringUtils.dateToString(new Date(), StringUtils.MMDDYYYY_SLASH);
         Call<JsonResponseSingle<MoonPhases>> call = RSClient.getApi().getMoonPhases(id, today);

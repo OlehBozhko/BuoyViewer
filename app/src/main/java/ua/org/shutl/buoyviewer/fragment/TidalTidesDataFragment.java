@@ -49,6 +49,11 @@ public class TidalTidesDataFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
     private void initData(long id) {
         Call<JsonResponseSingle<TidalTidesData>> call = RSClient.getApi().getTidalTidesData(id);

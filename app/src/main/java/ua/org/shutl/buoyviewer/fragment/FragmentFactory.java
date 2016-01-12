@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public abstract class FragmentFactory {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             LocationItem locationItem = (LocationItem) parent.getItemAtPosition(position);
+            Log.w("LocationItem: ", locationItem.toString());
             final int itemType = locationItem.getItemType();
             if (itemType == 0 || itemType == 1) {
                 pagerAdapter.showLocationItemListByParent(locationItem.getLocationId());
@@ -82,6 +84,7 @@ public abstract class FragmentFactory {
         }
 
         private void initFragments() {
+            Log.w("TAG","INNNNNNN");
             final long locationId = locationItem.getLocationId();
             if (locationItem.isVisibleOnBuoys()) {
                 addFragment(R.id.content_buoy_info, BuoyInfoFragment.getInstanceById(locationId));
@@ -90,8 +93,11 @@ public abstract class FragmentFactory {
                 addFragment(R.id.content_tidal_general_info, TidalGeneralInfoFragment.getInstanceById(locationId));
                 addFragment(R.id.content_tidal_tides_data, TidalTidesDataFragment.getInstanceById(locationId));
             }
-            if (locationItem.isVisibleOnBuoys()) {
+            if (locationItem.isVisibleOnMoonPhases()) {
                 addFragment(R.id.content_moon_phases, MoonPhasesFragment.getInstanceById(locationId));
+            }
+            if (locationItem.isVisibleOnWeatherForecast()) {
+                addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
             }
             if (locationItem.isVisibleOnMarineForecast()) {
                 addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
@@ -102,6 +108,7 @@ public abstract class FragmentFactory {
             if (locationItem.isVisibleOnSeaSurfaceTemp()) {
                 addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
             }
+
             if (locationItem.isVisibleOnWavewatch()) {
                 addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
             }

@@ -60,6 +60,12 @@ public class TidalGeneralInfoFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void initData(long id) {
         Call<JsonResponseSingle<TidalGeneralInfo>> call = RSClient.getApi().getTidalGeneralInfo(id);
         call.enqueue(new Callback<JsonResponseSingle<TidalGeneralInfo>>() {

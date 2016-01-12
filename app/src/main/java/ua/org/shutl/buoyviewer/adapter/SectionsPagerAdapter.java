@@ -1,9 +1,12 @@
 package ua.org.shutl.buoyviewer.adapter;
 
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +17,20 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
 /**
  * Created by shutl on 09.01.16.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements ViewPager.OnPageChangeListener {
 
     private List<Fragment> fragmentList = new ArrayList<>(10);
+
     private ViewPager viewPager;
 
     public SectionsPagerAdapter(FragmentManager fm, ViewPager viewPager) {
         super(fm);
         viewPager.setAdapter(this);
-        viewPager.setOffscreenPageLimit(0);
+        viewPager.addOnPageChangeListener(this);
         this.viewPager = viewPager;
-        initViewPagerListeners();
+        viewPager.setOffscreenPageLimit(1);
         FragmentFactory.setPagerAdapter(this);
     }
-
 
     @Override
     public Fragment getItem(int position) {
@@ -41,48 +44,81 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        return super.getItemPosition(object);
+        int index = fragmentList.indexOf(object);
+        if (index == -1)
+            return POSITION_NONE;
+        else
+            return index;
     }
 
-    public void loadRootList() {
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return fragmentList.get(position).getTag();
+    }
+
+    public void showLocationItemRootList() {
         fragmentList.clear();
         fragmentList.add(FragmentFactory.newInstance());
         notifyDataSetChanged();
-        viewPager.setCurrentItem(0, true);
+        startPage();
     }
-
 
     public void showLocationItemListByParent(long parentId) {
         fragmentList.add(FragmentFactory.newInstance(parentId));
         notifyDataSetChanged();
-        int currentItem = viewPager.getCurrentItem();
-        viewPager.setCurrentItem(currentItem + 1, true);
+        nextPage();
     }
 
     public void showLocationInfoFragment(LocationItem locationItem) {
         fragmentList.add(FragmentFactory.newInstance(locationItem));
         notifyDataSetChanged();
-        int currentItem = viewPager.getCurrentItem();
-        viewPager.setCurrentItem(currentItem + 1, true);
+        nextPage();
     }
 
-    public void initViewPagerListeners() {
+    public void nextPage() {
+        int currentItem = viewPager.getCurrentItem();
+        viewPager.setCurrentItem(currentItem + 1);
+    }
 
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+    public void previousPage() {
+        int currentItem = viewPager.getCurrentItem();
+        if (currentItem > 0) {
+            viewPager.setCurrentItem(currentItem - 1);
+        }
+    }
 
-            @Override
-            public void onPageSelected(int position) {
-                int fragmentListSize = fragmentList.size();
-                int incrementedPosition = position + 1;
-                if (fragmentListSize > 1) {
-                    if (fragmentListSize > incrementedPosition) {
-                        for (int i = incrementedPosition; i < fragmentListSize; i++) {
-                            fragmentList.remove(i);
-                        }
-                    }
+    public void startPage() {
+        viewPager.setCurrentItem(0);
+        setPrimaryItem(null, 0, fragmentList.get(0));
+    }
+
+    public PagerAdapter getPagerAdapter() {
+        return this;
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        int fragmentListSize = fragmentList.size();
+        int nextPagePosition = position + 1;
+        if (fragmentListSize > 1) {
+            if (fragmentListSize > nextPagePosition) {
+                for (int i = nextPagePosition; i < fragmentListSize; i++) {
+                    View view = fragmentList.get(i).getView();
+                    fragmentList.remove(i);
+                    viewPager.removeView(view);
                 }
-                notifyDataSetChanged();
             }
-        });
+        }
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
     }
 }

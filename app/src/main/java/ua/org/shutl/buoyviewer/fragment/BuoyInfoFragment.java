@@ -61,6 +61,12 @@ public class BuoyInfoFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void initData(long id) {
         Call<JsonResponseSingle<BuoyInfo>> call = RSClient.getApi().getBuoyInfo(id);
         call.enqueue(new Callback<JsonResponseSingle<BuoyInfo>>() {
