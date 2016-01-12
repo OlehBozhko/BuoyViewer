@@ -24,6 +24,7 @@ import ua.org.shutl.buoyviewer.model.adapter.LocationItemAdapter;
  * Created by shutl on 08.01.16.
  */
 public abstract class FragmentFactory {
+
     private static LocationItemDao locationItemDao = new LocationItemDaoImpl();
 
     private static SectionsPagerAdapter pagerAdapter;
@@ -84,7 +85,6 @@ public abstract class FragmentFactory {
         }
 
         private void initFragments() {
-            Log.w("TAG","INNNNNNN");
             final long locationId = locationItem.getLocationId();
             if (locationItem.isVisibleOnBuoys()) {
                 addFragment(R.id.content_buoy_info, BuoyInfoFragment.getInstanceById(locationId));
@@ -108,7 +108,6 @@ public abstract class FragmentFactory {
             if (locationItem.isVisibleOnSeaSurfaceTemp()) {
                 addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
             }
-
             if (locationItem.isVisibleOnWavewatch()) {
                 addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
             }
@@ -116,6 +115,22 @@ public abstract class FragmentFactory {
 
         private void addFragment(@IdRes int containerViewId, Fragment fragment) {
             getChildFragmentManager().beginTransaction().add(containerViewId, fragment).commit();
+        }
+
+        private void removeFragment(@IdRes int containerViewId) {
+            Fragment fragment = getChildFragmentManager().findFragmentById(containerViewId);
+            if (fragment != null && fragment.isAdded() && !fragment.isRemoving() && !fragment.isDetached()) {
+                getChildFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            removeFragment(R.id.content_buoy_info);
+            removeFragment(R.id.content_tidal_general_info);
+            removeFragment(R.id.content_tidal_tides_data);
+            removeFragment(R.id.content_moon_phases);
+            removeFragment(R.id.content_empty);
         }
     }
 

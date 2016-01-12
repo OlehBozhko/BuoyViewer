@@ -1,6 +1,5 @@
 package ua.org.shutl.buoyviewer.adapter;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,6 +10,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.org.shutl.buoyviewer.R;
 import ua.org.shutl.buoyviewer.fragment.FragmentFactory;
 import ua.org.shutl.buoyviewer.model.LocationItem;
 
@@ -105,6 +105,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements V
                 for (int i = nextPagePosition; i < fragmentListSize; i++) {
                     View view = fragmentList.get(i).getView();
                     fragmentList.remove(i);
+                    clearFragmentView(view);
                     viewPager.removeView(view);
                 }
             }
@@ -120,5 +121,10 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter implements V
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+    }
+
+    private void clearFragmentView(View view) {
+        View buoyInfo = view.findViewById(R.id.content_buoy_info);
+        viewPager.removeView(buoyInfo);
     }
 }
