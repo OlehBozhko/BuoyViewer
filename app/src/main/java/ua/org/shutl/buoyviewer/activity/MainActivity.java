@@ -1,13 +1,9 @@
 package ua.org.shutl.buoyviewer.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import retrofit.Call;
@@ -33,23 +29,8 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewPager);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewPager, this);
         mSectionsPagerAdapter.showLocationItemRootList();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_layout_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void onClickBackPage(View view) {
@@ -57,6 +38,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void updateRootListAndShow(View view) {
+        Snackbar.make(view, "Updating data from server...", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Action", null).show();
         Call<JsonResponseArray<LocationItem>> call = RSClient.getApi().getLocationList();
         call.enqueue(new Callback<JsonResponseArray<LocationItem>>() {
             @Override
@@ -65,7 +48,7 @@ public class MainActivity extends FragmentActivity {
                     JsonResponseArray<LocationItem> locationList = rspns.body();
                     locationItemDao.clearTable();
                     locationItemDao.saveLocationItems(locationList.getResultArray());
-                    Snackbar.make(view, "Data saved, updating list...", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Data received, processing...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     mSectionsPagerAdapter.showLocationItemRootList();
                 }
@@ -77,7 +60,5 @@ public class MainActivity extends FragmentActivity {
                         .setAction("Action", null).show();
             }
         });
-
     }
-
 }

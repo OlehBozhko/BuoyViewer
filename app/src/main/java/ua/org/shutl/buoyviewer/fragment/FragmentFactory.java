@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -55,21 +53,6 @@ public abstract class FragmentFactory {
         fragment.setArguments(args);
         return fragment;
     }
-
-
-    private static AdapterView.OnItemClickListener onLocationItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            LocationItem locationItem = (LocationItem) parent.getItemAtPosition(position);
-            Log.w("LocationItem: ", locationItem.toString());
-            final int itemType = locationItem.getItemType();
-            if (itemType == 0 || itemType == 1) {
-                pagerAdapter.showLocationItemListByParent(locationItem.getLocationId());
-            } else if (itemType == 2) {
-                pagerAdapter.showLocationInfoFragment(locationItem);
-            }
-        }
-    };
 
     public static class LocationItemFragment extends Fragment {
 
@@ -145,7 +128,7 @@ public abstract class FragmentFactory {
             View rootView = inflater.inflate(R.layout.fragment_location_list, container, false);
             ListView listView = (ListView) rootView.findViewById(R.id.list);
             listView.setAdapter(new LocationItemAdapter(getActivity(), locationItems));
-            listView.setOnItemClickListener(onLocationItemClickListener);
+            listView.setOnItemClickListener(pagerAdapter);
             return rootView;
         }
     }
@@ -162,7 +145,7 @@ public abstract class FragmentFactory {
             View rootView = inflater.inflate(R.layout.fragment_location_list, container, false);
             ListView listView = (ListView) rootView.findViewById(R.id.list);
             listView.setAdapter(new LocationItemAdapter(getActivity(), locationItems));
-            listView.setOnItemClickListener(onLocationItemClickListener);
+            listView.setOnItemClickListener(pagerAdapter);
             return rootView;
         }
     }

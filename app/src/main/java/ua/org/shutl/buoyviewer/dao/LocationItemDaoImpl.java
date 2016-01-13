@@ -25,7 +25,7 @@ public class LocationItemDaoImpl extends LocationItemDao{
     public List<LocationItem> getLocationItemsListByParentId(long parentId) {
         List<LocationItem> locationItems = SQLite.select().from(LocationItem.class)
                 .where(LocationItem_Table.parentId.eq(parentId)).queryList();
-        Log.w("list",locationItems.toString());
+//        Log.w("list",locationItems.toString());
         return locationItems;
     }
 
