@@ -15,6 +15,13 @@ import ua.org.shutl.buoyviewer.R;
 import ua.org.shutl.buoyviewer.adapter.SectionsPagerAdapter;
 import ua.org.shutl.buoyviewer.dao.LocationItemDao;
 import ua.org.shutl.buoyviewer.dao.LocationItemDaoImpl;
+import ua.org.shutl.buoyviewer.fragment.sub.BuoyInfoFragment;
+import ua.org.shutl.buoyviewer.fragment.sub.EmptyFragment;
+import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragment;
+import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragmentFactory;
+import ua.org.shutl.buoyviewer.fragment.sub.MoonPhasesFragment;
+import ua.org.shutl.buoyviewer.fragment.sub.TidalGeneralInfoFragment;
+import ua.org.shutl.buoyviewer.fragment.sub.TidalTidesDataFragment;
 import ua.org.shutl.buoyviewer.model.LocationItem;
 import ua.org.shutl.buoyviewer.model.adapter.LocationItemAdapter;
 
@@ -63,48 +70,8 @@ public abstract class FragmentFactory {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             locationItem = (LocationItem) getArguments().getSerializable("locationItem");
             View rootView = inflater.inflate(R.layout.layout_location_info, container, false);
-            initFragments();
+            LocationItemSubFragmentFactory.attach(locationItem);
             return rootView;
-        }
-
-        private void initFragments() {
-            final long locationId = locationItem.getLocationId();
-            if (locationItem.isVisibleOnBuoys()) {
-                addFragment(R.id.content_buoy_info, BuoyInfoFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnTides()) {
-                addFragment(R.id.content_tidal_general_info, TidalGeneralInfoFragment.getInstanceById(locationId));
-                addFragment(R.id.content_tidal_tides_data, TidalTidesDataFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnMoonPhases()) {
-                addFragment(R.id.content_moon_phases, MoonPhasesFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnWeatherForecast()) {
-                addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnMarineForecast()) {
-                addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnRadar()) {
-                addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnSeaSurfaceTemp()) {
-                addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
-            }
-            if (locationItem.isVisibleOnWavewatch()) {
-                addFragment(R.id.content_empty, EmptyFragment.getInstanceById(locationId));
-            }
-        }
-
-        private void addFragment(@IdRes int containerViewId, Fragment fragment) {
-            getChildFragmentManager().beginTransaction().add(containerViewId, fragment).commit();
-        }
-
-        private void removeFragment(@IdRes int containerViewId) {
-            Fragment fragment = getChildFragmentManager().findFragmentById(containerViewId);
-            if (fragment != null && fragment.isAdded() && !fragment.isRemoving() && !fragment.isDetached()) {
-                getChildFragmentManager().beginTransaction().remove(fragment).commit();
-            }
         }
 
         @Override

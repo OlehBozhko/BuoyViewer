@@ -1,25 +1,14 @@
-package ua.org.shutl.buoyviewer.fragment;
+package ua.org.shutl.buoyviewer.fragment.sub;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.model.MoonPhases;
-import ua.org.shutl.buoyviewer.model.Phases;
-import ua.org.shutl.buoyviewer.model.SunInfos;
+import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragment;
 import ua.org.shutl.buoyviewer.model.TidalGeneralInfo;
 import ua.org.shutl.buoyviewer.model.shell.JsonResponseSingle;
 import ua.org.shutl.buoyviewer.rest.RSClient;
@@ -28,14 +17,10 @@ import ua.org.shutl.buoyviewer.util.StringUtils;
 /**
  * Created by shutl on 10.01.16.
  */
-public class TidalGeneralInfoFragment extends Fragment {
+public class TidalGeneralInfoFragment extends LocationItemSubFragment {
 
-    public static Fragment getInstanceById(long id) {
-        Fragment fragment = new TidalGeneralInfoFragment();
-        Bundle args = new Bundle();
-        args.putLong("id", id);
-        fragment.setArguments(args);
-        return fragment;
+    public TidalGeneralInfoFragment() {
+        layout = R.layout.fragment_tidal_general_info;
     }
 
     @Bind(R.id.textTideName)
@@ -50,23 +35,7 @@ public class TidalGeneralInfoFragment extends Fragment {
     @Bind(R.id.textCurrentDate)
     TextView textCurrentDate;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_tidal_general_info, container, false);
-        ButterKnife.bind(this, rootView);
-        long id = getArguments().getLong("id");
-        initData(id);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    private void initData(long id) {
+    protected void initData(long id) {
         Call<JsonResponseSingle<TidalGeneralInfo>> call = RSClient.getApi().getTidalGeneralInfo(id);
         call.enqueue(new Callback<JsonResponseSingle<TidalGeneralInfo>>() {
             @Override
