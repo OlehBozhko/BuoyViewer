@@ -3,14 +3,13 @@ package ua.org.shutl.buoyviewer.activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.adapter.SectionsPagerAdapter;
+import ua.org.shutl.buoyviewer.adapter.MainFragmentManager;
 import ua.org.shutl.buoyviewer.dao.LocationItemDao;
 import ua.org.shutl.buoyviewer.dao.LocationItemDaoImpl;
 import ua.org.shutl.buoyviewer.model.LocationItem;
@@ -21,21 +20,28 @@ public class MainActivity extends FragmentActivity {
 
     LocationItemDao locationItemDao = new LocationItemDaoImpl();
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private MainFragmentManager mMainFragmentManager;
     private volatile boolean updateInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewPager, this);
-        mSectionsPagerAdapter.showLocationItemRootList();
+        mMainFragmentManager = new MainFragmentManager(getSupportFragmentManager(), this);
+        mMainFragmentManager.showLocationItemRootList();
     }
 
     public void onClickBackPage(View view) {
-        mSectionsPagerAdapter.previousPage();
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void updateRootListAndShow(View view) {
@@ -53,7 +59,7 @@ public class MainActivity extends FragmentActivity {
                     locationItemDao.saveLocationItems(locationList.getResultArray());
                     Snackbar.make(view, "Data received, processing...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    mSectionsPagerAdapter.showLocationItemRootList();
+                    mMainFragmentManager.showLocationItemRootList();
                 }
                 updateInProgress = false;
             }

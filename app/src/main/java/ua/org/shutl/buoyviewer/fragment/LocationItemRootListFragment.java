@@ -11,7 +11,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.adapter.SectionsPagerAdapter;
+import ua.org.shutl.buoyviewer.adapter.MainFragmentManager;
 import ua.org.shutl.buoyviewer.dao.LocationItemDao;
 import ua.org.shutl.buoyviewer.dao.LocationItemDaoImpl;
 import ua.org.shutl.buoyviewer.model.LocationItem;
@@ -22,11 +22,13 @@ import ua.org.shutl.buoyviewer.model.adapter.LocationItemAdapter;
  */
 public class LocationItemRootListFragment extends Fragment{
 
+    public static String TAG = LocationItemRootListFragment.class.getSimpleName();
+
     private static LocationItemDao locationItemDao = new LocationItemDaoImpl();
-    private static SectionsPagerAdapter pagerAdapter;
+    private static MainFragmentManager pagerAdapter;
     List<LocationItem> locationItems;
 
-    public static Fragment newInstance(SectionsPagerAdapter adapter) {
+    public static Fragment newInstance(MainFragmentManager adapter) {
         pagerAdapter = adapter;
         Fragment fragment = new LocationItemRootListFragment();
         Bundle args = new Bundle();

@@ -16,6 +16,8 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
  */
 public class LocationItemFragment extends Fragment{
 
+    public static String TAG = LocationItemFragment.class.getSimpleName();
+
     public static Fragment newInstance(LocationItem locationItem) {
         Fragment fragment = new LocationItemFragment();
         Bundle args = new Bundle();
