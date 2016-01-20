@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -14,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.FragmentFactory;
+import ua.org.shutl.buoyviewer.fragment.LocationItemFragment;
+import ua.org.shutl.buoyviewer.fragment.LocationItemListFragment;
+import ua.org.shutl.buoyviewer.fragment.LocationItemRootListFragment;
 import ua.org.shutl.buoyviewer.model.LocationItem;
 
 /**
@@ -41,7 +42,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter
         viewPager.addOnPageChangeListener(this);
         this.viewPager = viewPager;
         viewPager.setOffscreenPageLimit(1);
-        FragmentFactory.setPagerAdapter(this);
         textView = (TextView) activity.findViewById(R.id.action_bar_title);
     }
 
@@ -71,19 +71,19 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter
 
     public void showLocationItemRootList() {
         fragmentList.clear();
-        fragmentList.add(FragmentFactory.newInstance());
+        fragmentList.add(LocationItemRootListFragment.newInstance(this));
         notifyDataSetChanged();
         startPage();
     }
 
     public void showLocationItemListByParent(long parentId) {
-        fragmentList.add(FragmentFactory.newInstance(parentId));
+        fragmentList.add(LocationItemListFragment.newInstance(parentId, this));
         notifyDataSetChanged();
         nextPage();
     }
 
     public void showLocationInfoFragment(LocationItem locationItem) {
-        fragmentList.add(FragmentFactory.newInstance(locationItem));
+        fragmentList.add(LocationItemFragment.newInstance(locationItem));
         notifyDataSetChanged();
         nextPage();
     }

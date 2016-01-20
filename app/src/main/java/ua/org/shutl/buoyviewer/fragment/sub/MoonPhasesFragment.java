@@ -10,7 +10,6 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragment;
 import ua.org.shutl.buoyviewer.model.MoonPhases;
 import ua.org.shutl.buoyviewer.model.Phases;
 import ua.org.shutl.buoyviewer.model.SunInfos;

@@ -5,8 +5,6 @@ import com.raizlabs.android.dbflow.structure.Model;
 
 import java.util.List;
 
-import ua.org.shutl.buoyviewer.model.LocationItem;
-
 /**
  * Created by shutl on 07.01.16.
  */

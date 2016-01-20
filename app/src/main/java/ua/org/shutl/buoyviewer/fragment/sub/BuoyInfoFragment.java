@@ -4,13 +4,11 @@ package ua.org.shutl.buoyviewer.fragment.sub;
 import android.util.Log;
 import android.widget.TextView;
 
-
 import butterknife.Bind;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragment;
 import ua.org.shutl.buoyviewer.model.BuoyInfo;
 import ua.org.shutl.buoyviewer.model.shell.JsonResponseSingle;
 import ua.org.shutl.buoyviewer.rest.RSClient;

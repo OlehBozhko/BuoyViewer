@@ -10,11 +10,11 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 import ua.org.shutl.buoyviewer.model.BuoyInfo;
 import ua.org.shutl.buoyviewer.model.LocationItem;
-import ua.org.shutl.buoyviewer.model.shell.JsonResponseArray;
-import ua.org.shutl.buoyviewer.model.shell.JsonResponseSingle;
 import ua.org.shutl.buoyviewer.model.MoonPhases;
 import ua.org.shutl.buoyviewer.model.TidalGeneralInfo;
 import ua.org.shutl.buoyviewer.model.TidalTidesData;
+import ua.org.shutl.buoyviewer.model.shell.JsonResponseArray;
+import ua.org.shutl.buoyviewer.model.shell.JsonResponseSingle;
 
 /**
  *

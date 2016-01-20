@@ -11,7 +11,6 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragment;
 import ua.org.shutl.buoyviewer.model.TidalTidesData;
 import ua.org.shutl.buoyviewer.model.TideData;
 import ua.org.shutl.buoyviewer.model.shell.JsonResponseSingle;

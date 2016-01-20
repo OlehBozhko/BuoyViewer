@@ -1,7 +1,6 @@
 package ua.org.shutl.buoyviewer.fragment.sub;
 
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragment;
 
 /**
  * Created by shutl on 10.01.16.
