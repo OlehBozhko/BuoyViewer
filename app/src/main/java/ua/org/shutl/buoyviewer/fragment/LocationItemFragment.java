@@ -14,7 +14,7 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
 /**
  * Created by shutl on 19.01.16.
  */
-public class LocationItemFragment extends Fragment{
+public class LocationItemFragment extends NamedFragment{
 
     public static String TAG = LocationItemFragment.class.getSimpleName();
 
@@ -32,6 +32,7 @@ public class LocationItemFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         locationItem = (LocationItem) getArguments().getSerializable("locationItem");
+        setName(locationItem.getName());
         View rootView = inflater.inflate(R.layout.layout_location_info, container, false);
         LocationItemSubFragmentManager.getInstance(getChildFragmentManager()).attach(locationItem);
         return rootView;

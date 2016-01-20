@@ -3,8 +3,12 @@ package ua.org.shutl.buoyviewer.activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -16,9 +20,12 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
 import ua.org.shutl.buoyviewer.model.shell.JsonResponseArray;
 import ua.org.shutl.buoyviewer.rest.RSClient;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     LocationItemDao locationItemDao = new LocationItemDaoImpl();
+
+    @Bind(R.id.toolbar)
+    protected Toolbar toolbar;
 
     private MainFragmentManager mMainFragmentManager;
     private volatile boolean updateInProgress = false;
@@ -27,6 +34,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
+        ButterKnife.bind(this);
+
         mMainFragmentManager = new MainFragmentManager(getSupportFragmentManager(), this);
         mMainFragmentManager.showLocationItemRootList();
     }
@@ -37,15 +46,19 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
     }
 
+    public Toolbar getBar() {
+        return toolbar;
+    }
+
     public void updateRootListAndShow(View view) {
-        if(updateInProgress) return;
+        if (updateInProgress) return;
         updateInProgress = true;
         Snackbar.make(view, "Updating data from server...", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Action", null).show();

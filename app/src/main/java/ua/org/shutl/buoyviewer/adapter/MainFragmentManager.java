@@ -36,10 +36,9 @@ public class MainFragmentManager implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LocationItem locationItem = (LocationItem) parent.getItemAtPosition(position);
-        setNextToolbarHeader(locationItem.getName());
         final int itemType = locationItem.getItemType();
         if (itemType == 0 || itemType == 1) {
-            showLocationItemListByParent(locationItem.getLocationId());
+            showLocationItemListByParent(locationItem.getLocationId(), locationItem.getName());
         } else if (itemType == 2) {
             showLocationInfoFragment(locationItem);
         }
@@ -50,8 +49,8 @@ public class MainFragmentManager implements AdapterView.OnItemClickListener {
         addOrReplaceFragment(R.id.container, LocationItemRootListFragment.newInstance(this));
     }
 
-    public void showLocationItemListByParent(long parentId) {
-        addFragmentToBackStack(containerId, LocationItemListFragment.newInstance(parentId, this));
+    public void showLocationItemListByParent(long parentId, String name) {
+        addFragmentToBackStack(containerId, LocationItemListFragment.newInstance(parentId,name, this));
     }
 
     public void showLocationInfoFragment(LocationItem locationItem) {
@@ -60,11 +59,6 @@ public class MainFragmentManager implements AdapterView.OnItemClickListener {
 
     public void startPage() {
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
-
-    public void setNextToolbarHeader(String text) {
-        if (text.length() > 20) text = text.substring(0, 20);
-        textView.setText(text);
     }
 
     private void addOrReplaceFragment(@IdRes int containerViewId, Fragment fragment) {

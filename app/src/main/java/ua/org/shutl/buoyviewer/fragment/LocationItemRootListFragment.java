@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -20,16 +21,16 @@ import ua.org.shutl.buoyviewer.model.adapter.LocationItemAdapter;
 /**
  * Created by shutl on 20.01.16.
  */
-public class LocationItemRootListFragment extends Fragment{
+public class LocationItemRootListFragment extends NamedFragment{
 
     public static String TAG = LocationItemRootListFragment.class.getSimpleName();
 
     private static LocationItemDao locationItemDao = new LocationItemDaoImpl();
-    private static MainFragmentManager pagerAdapter;
+    private static AdapterView.OnItemClickListener onItemClickListener;
     List<LocationItem> locationItems;
 
-    public static Fragment newInstance(MainFragmentManager adapter) {
-        pagerAdapter = adapter;
+    public static Fragment newInstance(AdapterView.OnItemClickListener listener) {
+        onItemClickListener = listener;
         Fragment fragment = new LocationItemRootListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -43,9 +44,8 @@ public class LocationItemRootListFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_location_list, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.list);
         listView.setAdapter(new LocationItemAdapter(getActivity(), locationItems));
-        listView.setOnItemClickListener(pagerAdapter);
+        listView.setOnItemClickListener(onItemClickListener);
+        setName(getResources().getString(R.string.app_name));
         return rootView;
     }
-
-
 }
