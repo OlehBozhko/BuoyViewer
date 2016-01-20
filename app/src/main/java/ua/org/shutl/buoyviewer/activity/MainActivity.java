@@ -23,6 +23,7 @@ public class MainActivity extends FragmentActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private volatile boolean updateInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void updateRootListAndShow(View view) {
+        if(updateInProgress) return;
+        updateInProgress = true;
         Snackbar.make(view, "Updating data from server...", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Action", null).show();
         Call<JsonResponseArray<LocationItem>> call = RSClient.getApi().getLocationList();
@@ -52,10 +55,12 @@ public class MainActivity extends FragmentActivity {
                             .setAction("Action", null).show();
                     mSectionsPagerAdapter.showLocationItemRootList();
                 }
+                updateInProgress = false;
             }
 
             @Override
             public void onFailure(Throwable thrwbl) {
+                updateInProgress = false;
                 Snackbar.make(view, "Connection to server refused", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
