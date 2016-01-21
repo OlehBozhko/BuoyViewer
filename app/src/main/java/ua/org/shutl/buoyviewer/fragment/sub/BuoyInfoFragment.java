@@ -54,7 +54,6 @@ public class BuoyInfoFragment extends LocationItemSubFragment {
             @Override
             public void onFailure(Throwable t) {
                 Log.e("Error", this.getClass().getName() + "Retrofit callback");
-
             }
         });
     }

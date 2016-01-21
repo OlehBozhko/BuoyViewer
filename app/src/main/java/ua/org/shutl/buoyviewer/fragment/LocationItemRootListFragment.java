@@ -12,7 +12,6 @@ import android.widget.ListView;
 import java.util.List;
 
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.adapter.MainFragmentManager;
 import ua.org.shutl.buoyviewer.dao.LocationItemDao;
 import ua.org.shutl.buoyviewer.dao.LocationItemDaoImpl;
 import ua.org.shutl.buoyviewer.model.LocationItem;

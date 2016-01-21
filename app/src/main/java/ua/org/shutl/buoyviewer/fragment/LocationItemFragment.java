@@ -38,9 +38,4 @@ public class LocationItemFragment extends NamedFragment{
         return rootView;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        LocationItemSubFragmentManager.getInstance(getChildFragmentManager()).detach();
-    }
-
 }

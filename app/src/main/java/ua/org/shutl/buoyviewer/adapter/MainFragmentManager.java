@@ -1,13 +1,11 @@
 package ua.org.shutl.buoyviewer.adapter;
 
-import android.app.Activity;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import ua.org.shutl.buoyviewer.R;
 import ua.org.shutl.buoyviewer.fragment.LocationItemFragment;
@@ -20,17 +18,12 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
  */
 public class MainFragmentManager implements AdapterView.OnItemClickListener {
 
-    private final Activity activity;
     private final FragmentManager fragmentManager;
-
-    private TextView textView;
     @IdRes
     private int containerId = R.id.container;
 
-    public MainFragmentManager(FragmentManager fm, Activity activity) {
+    public MainFragmentManager(FragmentManager fm) {
         fragmentManager = fm;
-        this.activity = activity;
-        textView = (TextView) activity.findViewById(R.id.action_bar_title);
     }
 
     @Override

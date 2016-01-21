@@ -54,22 +54,7 @@ public class LocationItemSubFragmentManager {
 
     }
 
-    public void detach() {
-        removeFragment(R.id.content_buoy_info);
-        removeFragment(R.id.content_tidal_general_info);
-        removeFragment(R.id.content_tidal_tides_data);
-        removeFragment(R.id.content_moon_phases);
-        removeFragment(R.id.content_empty);
-    }
-
     private void addFragment(@IdRes int containerViewId, Fragment fragment) {
         fm.beginTransaction().add(containerViewId, fragment).commit();
-    }
-
-    private void removeFragment(@IdRes int containerViewId) {
-        Fragment fragment = fm.findFragmentById(containerViewId);
-        if (fragment != null && fragment.isAdded() && !fragment.isRemoving() && !fragment.isDetached()) {
-            fm.beginTransaction().remove(fragment).commit();
-        }
     }
 }

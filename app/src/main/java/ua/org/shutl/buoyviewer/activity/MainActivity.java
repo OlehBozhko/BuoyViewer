@@ -1,11 +1,12 @@
 package ua.org.shutl.buoyviewer.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
+    @Bind(R.id.root)
+    protected CoordinatorLayout root;
 
     private MainFragmentManager mMainFragmentManager;
     private volatile boolean updateInProgress = false;
@@ -36,20 +39,39 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.layout_main);
         ButterKnife.bind(this);
 
-        mMainFragmentManager = new MainFragmentManager(getSupportFragmentManager(), this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mMainFragmentManager = new MainFragmentManager(getSupportFragmentManager());
         mMainFragmentManager.showLocationItemRootList();
     }
 
-    public void onClickBackPage(View view) {
-        onBackPressed();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_refresh:
+                updateRootListAndShow();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -57,11 +79,13 @@ public class MainActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    public void updateRootListAndShow(View view) {
+    public void updateRootListAndShow() {
         if (updateInProgress) return;
+
         updateInProgress = true;
-        Snackbar.make(view, "Updating data from server...", Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(root, "Updating data from server...", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Action", null).show();
+
         Call<JsonResponseArray<LocationItem>> call = RSClient.getApi().getLocationList();
         call.enqueue(new Callback<JsonResponseArray<LocationItem>>() {
             @Override
@@ -70,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     JsonResponseArray<LocationItem> locationList = rspns.body();
                     locationItemDao.clearTable();
                     locationItemDao.saveLocationItems(locationList.getResultArray());
-                    Snackbar.make(view, "Data received, processing...", Snackbar.LENGTH_LONG)
+                    Snackbar.make(root, "Data received, processing...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     mMainFragmentManager.showLocationItemRootList();
                 }
@@ -80,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable thrwbl) {
                 updateInProgress = false;
-                Snackbar.make(view, "Connection to server refused", Snackbar.LENGTH_LONG)
+                Snackbar.make(root, "Connection to server refused", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
