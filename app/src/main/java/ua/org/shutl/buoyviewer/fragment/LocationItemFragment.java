@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragmentManager;
+import ua.org.shutl.buoyviewer.fragment.sub.LocationItemSubFragmentCreator;
 import ua.org.shutl.buoyviewer.model.LocationItem;
 
 /**
@@ -34,7 +34,7 @@ public class LocationItemFragment extends NamedFragment{
         locationItem = (LocationItem) getArguments().getSerializable("locationItem");
         setName(locationItem.getName());
         View rootView = inflater.inflate(R.layout.layout_location_info, container, false);
-        LocationItemSubFragmentManager.getInstance(getChildFragmentManager()).attach(locationItem);
+        LocationItemSubFragmentCreator.getInstance(getChildFragmentManager()).attach(locationItem);
         return rootView;
     }
 

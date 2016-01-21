@@ -23,12 +23,12 @@ public abstract class LocationItemSubFragment extends Fragment{
         Fragment fragment = null;
         try {
             fragment = tClass.newInstance();
+            Bundle args = new Bundle();
+            args.putLong("id", id);
+            fragment.setArguments(args);
         } catch (Exception e) {
             Log.w("LocationItemSubFragment","Can't find this object");
         }
-        Bundle args = new Bundle();
-        args.putLong("id", id);
-        fragment.setArguments(args);
         return fragment;
     }
 
