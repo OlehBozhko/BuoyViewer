@@ -27,34 +27,33 @@ public class LocationItemSubFragmentManager {
     public void attach(LocationItem locationItem) {
         final long locationId = locationItem.getLocationId();
         if (locationItem.isVisibleOnBuoys()) {
-            addFragment(R.id.content_buoy_info, LocationItemSubFragment.getInstanceById(locationId, BuoyInfoFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, BuoyInfoFragment.class));
         }
         if (locationItem.isVisibleOnTides()) {
-            addFragment(R.id.content_tidal_general_info, LocationItemSubFragment.getInstanceById(locationId, TidalGeneralInfoFragment.class));
-            addFragment(R.id.content_tidal_tides_data, LocationItemSubFragment.getInstanceById(locationId, TidalTidesDataFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, TidalGeneralInfoFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, TidalTidesDataFragment.class));
         }
         if (locationItem.isVisibleOnMoonPhases()) {
-            addFragment(R.id.content_moon_phases, LocationItemSubFragment.getInstanceById(locationId, MoonPhasesFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, MoonPhasesFragment.class));
         }
         if (locationItem.isVisibleOnWeatherForecast()) {
-            addFragment(R.id.content_empty, LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
         }
         if (locationItem.isVisibleOnMarineForecast()) {
-            addFragment(R.id.content_empty, LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
         }
         if (locationItem.isVisibleOnRadar()) {
-            addFragment(R.id.content_empty, LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
         }
         if (locationItem.isVisibleOnSeaSurfaceTemp()) {
-            addFragment(R.id.content_empty, LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
         }
         if (locationItem.isVisibleOnWavewatch()) {
-            addFragment(R.id.content_empty, LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
+            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
         }
-
     }
 
-    private void addFragment(@IdRes int containerViewId, Fragment fragment) {
-        fm.beginTransaction().add(containerViewId, fragment).commit();
+    private void addFragmentToContainer(Fragment fragment) {
+        fm.beginTransaction().add(R.id.content_location_info, fragment).commit();
     }
 }
