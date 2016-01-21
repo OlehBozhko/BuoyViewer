@@ -24,6 +24,7 @@ public class LocationItemDaoImpl extends LocationItemDao {
                 .where(LocationItem_Table.parentId.eq(parentId)).queryList();
     }
 
+    @Override
     public void saveLocationItems(LocationItem[] items) {
         if (items != null) {
             for (LocationItem item : items) {

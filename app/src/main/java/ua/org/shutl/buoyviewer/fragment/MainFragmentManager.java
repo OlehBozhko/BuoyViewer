@@ -1,4 +1,4 @@
-package ua.org.shutl.buoyviewer.adapter;
+package ua.org.shutl.buoyviewer.fragment;
 
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import ua.org.shutl.buoyviewer.R;
-import ua.org.shutl.buoyviewer.fragment.LocationItemFragment;
-import ua.org.shutl.buoyviewer.fragment.LocationItemListFragment;
-import ua.org.shutl.buoyviewer.fragment.LocationItemRootListFragment;
 import ua.org.shutl.buoyviewer.model.LocationItem;
 
 /**

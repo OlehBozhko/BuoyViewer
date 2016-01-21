@@ -1,6 +1,5 @@
 package ua.org.shutl.buoyviewer.fragment.sub;
 
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -36,16 +35,7 @@ public class LocationItemSubFragmentManager {
         if (locationItem.isVisibleOnMoonPhases()) {
             addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, MoonPhasesFragment.class));
         }
-        if (locationItem.isVisibleOnWeatherForecast()) {
-            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
-        }
-        if (locationItem.isVisibleOnMarineForecast()) {
-            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
-        }
         if (locationItem.isVisibleOnRadar()) {
-            addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
-        }
-        if (locationItem.isVisibleOnSeaSurfaceTemp()) {
             addFragmentToContainer(LocationItemSubFragment.getInstanceById(locationId, EmptyFragment.class));
         }
         if (locationItem.isVisibleOnWavewatch()) {
