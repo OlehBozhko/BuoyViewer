@@ -15,9 +15,9 @@ import ua.org.shutl.buoyviewer.model.LocationItem;
  */
 public class MainFragmentManager implements AdapterView.OnItemClickListener {
 
-    private final FragmentManager fragmentManager;
     @IdRes
     private int containerId = R.id.container;
+    private final FragmentManager fragmentManager;
 
     public MainFragmentManager(FragmentManager fm) {
         fragmentManager = fm;
@@ -39,15 +39,15 @@ public class MainFragmentManager implements AdapterView.OnItemClickListener {
         addOrReplaceFragment(R.id.container, LocationItemRootListFragment.newInstance(this));
     }
 
-    public void showLocationItemListByParent(long parentId, String name) {
+    private void showLocationItemListByParent(long parentId, String name) {
         addFragmentToBackStack(containerId, LocationItemListFragment.newInstance(parentId,name, this));
     }
 
-    public void showLocationInfoFragment(LocationItem locationItem) {
+    private void showLocationInfoFragment(LocationItem locationItem) {
         addFragmentToBackStack(containerId, LocationItemFragment.newInstance(locationItem));
     }
 
-    public void startPage() {
+    private void startPage() {
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
@@ -58,7 +58,6 @@ public class MainFragmentManager implements AdapterView.OnItemClickListener {
         } else {
             fragmentManager.beginTransaction().add(containerViewId, fragment).commit();
         }
-
     }
 
     private void addFragmentToBackStack(@IdRes int containerViewId, Fragment fragment) {
