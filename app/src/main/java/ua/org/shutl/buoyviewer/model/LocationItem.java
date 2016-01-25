@@ -1,5 +1,6 @@
 package ua.org.shutl.buoyviewer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -14,6 +15,7 @@ import ua.org.shutl.buoyviewer.BuoysDatabase;
 /**
  * @author shutl
  */
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"modelAdapter"})
 @Table(name = "location_items", useIsForPrivateBooleans = true, database = BuoysDatabase.class)
 public class LocationItem extends BaseModel implements Serializable {
 

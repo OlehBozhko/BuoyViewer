@@ -9,6 +9,7 @@ import butterknife.Bind;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
 import ua.org.shutl.buoyviewer.R;
 import ua.org.shutl.buoyviewer.model.MoonPhases;
 import ua.org.shutl.buoyviewer.model.Phases;
@@ -20,7 +21,7 @@ import ua.org.shutl.buoyviewer.util.StringUtils;
 /**
  * Created by shutl on 10.01.16.
  */
-public class MoonPhasesFragment extends LocationItemSubFragment {
+public class MoonPhasesFragment extends SubFragment {
 
     public MoonPhasesFragment() {
         layout = R.layout.fragment_moon_phases;
@@ -49,7 +50,7 @@ public class MoonPhasesFragment extends LocationItemSubFragment {
         Call<JsonResponseSingle<MoonPhases>> call = RSClient.getApi().getMoonPhases(id, today);
         call.enqueue(new Callback<JsonResponseSingle<MoonPhases>>() {
             @Override
-            public void onResponse(Response<JsonResponseSingle<MoonPhases>> response) {
+            public void onResponse(Response<JsonResponseSingle<MoonPhases>> response, Retrofit retrofit) {
                 final MoonPhases moonPhases = response.body().getResult();
                 final Phases phases = moonPhases.getPhases();
                 textNewMoon.setText(phases.getNewMoon());

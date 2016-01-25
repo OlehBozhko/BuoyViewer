@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
 import ua.org.shutl.buoyviewer.R;
 import ua.org.shutl.buoyviewer.dao.LocationItemDao;
 import ua.org.shutl.buoyviewer.dao.LocationItemDaoImpl;
@@ -88,10 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
         Call<JsonResponseArray<LocationItem>> call = RSClient.getApi().getLocationList();
         call.enqueue(new Callback<JsonResponseArray<LocationItem>>() {
+
             @Override
-            public void onResponse(Response<JsonResponseArray<LocationItem>> rspns) {
-                if (rspns.body() != null) {
-                    JsonResponseArray<LocationItem> locationList = rspns.body();
+            public void onResponse(Response<JsonResponseArray<LocationItem>> response, Retrofit retrofit) {
+                if (response.body() != null) {
+                    JsonResponseArray<LocationItem> locationList = response.body();
                     locationItemDao.clearTable();
                     locationItemDao.saveLocationItems(locationList.getResultArray());
                     Snackbar.make(root, "Data received, processing...", Snackbar.LENGTH_LONG)

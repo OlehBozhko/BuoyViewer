@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import ua.org.shutl.buoyviewer.R;
+import ua.org.shutl.buoyviewer.fragment.main.LocationItemFragment;
+import ua.org.shutl.buoyviewer.fragment.main.LocationItemListFragment;
+import ua.org.shutl.buoyviewer.fragment.main.LocationItemRootListFragment;
 import ua.org.shutl.buoyviewer.model.LocationItem;
 
 /**
@@ -40,7 +43,7 @@ public class MainFragmentManager implements AdapterView.OnItemClickListener {
     }
 
     private void showLocationItemListByParent(long parentId, String name) {
-        addFragmentToBackStack(containerId, LocationItemListFragment.newInstance(parentId,name, this));
+        addFragmentToBackStack(containerId, LocationItemListFragment.newInstance(parentId, name, this));
     }
 
     private void showLocationInfoFragment(LocationItem locationItem) {
