@@ -12,7 +12,6 @@ import java.util.List;
 
 import ua.org.shutl.buoyviewer.fragment.sub.SubFragment;
 import ua.org.shutl.buoyviewer.model.LocationItem;
-import ua.org.shutl.buoyviewer.util.StringUtils;
 
 /**
  * Created by shutl on 19.01.16.
@@ -28,8 +27,7 @@ public abstract class SubFragmentFactory {
         final List<Fragment> fragments = new ArrayList<>();
         for (String type : getAvailableTypesList(locationItem)) {
             try {
-                Class<? extends SubFragment> clazz =
-                        (Class<? extends SubFragment>) Class.forName(PACKAGE + type);
+                Class<? extends SubFragment> clazz = (Class<? extends SubFragment>) Class.forName(type);
                 fragments.add(buildFragment(locationId, clazz));
             } catch (Exception e) {
             }
@@ -50,7 +48,7 @@ public abstract class SubFragmentFactory {
         while (fields.hasNext()) {
             String field = fields.next();
             if (field.startsWith(KEY_WORD) && node.path(field).asBoolean()) {
-                String className = field.replaceFirst(KEY_WORD, StringUtils.EMPTY).concat(FRAGMENT_POSTFIX);
+                String className = field.replaceFirst(KEY_WORD, PACKAGE).concat(FRAGMENT_POSTFIX);
                 typesList.add(className);
             }
         }
