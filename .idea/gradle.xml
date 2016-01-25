@@ -12,6 +12,12 @@
             <option value="/mnt/MEDIA/Projects/Android/BuoyViewer/app" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="/mnt/MEDIA/Projects/Android/BuoyViewer" />
+            <option value="/mnt/MEDIA/Projects/Android/BuoyViewer/app" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

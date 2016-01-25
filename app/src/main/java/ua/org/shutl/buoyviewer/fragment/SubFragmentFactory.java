@@ -1,7 +1,6 @@
 package ua.org.shutl.buoyviewer.fragment;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,26 +19,28 @@ import ua.org.shutl.buoyviewer.util.StringUtils;
  */
 public abstract class SubFragmentFactory {
 
-    private final static String packagee = "ua.org.shutl.buoyviewer.fragment.sub.";
-    private final static String keyWord = "VisibleOn";
-    private final static String fragmentPostfix = "Fragment";
+    private final static String PACKAGE = "ua.org.shutl.buoyviewer.fragment.sub.";
+    private final static String KEY_WORD = "VisibleOn";
+    private final static String FRAGMENT_POSTFIX = "Fragment";
 
     public static List<Fragment> create(LocationItem locationItem) {
         final long locationId = locationItem.getLocationId();
         final List<Fragment> fragments = new ArrayList<>();
-        List<String> availableTypesList = getAvailableTypesList(locationItem);
-        for (String type : availableTypesList) {
+        for (String type : getAvailableTypesList(locationItem)) {
             try {
                 Class<? extends SubFragment> clazz =
-                        (Class<? extends SubFragment>) Class.forName(packagee + type);
+                        (Class<? extends SubFragment>) Class.forName(PACKAGE + type);
                 fragments.add(buildFragment(locationId, clazz));
-            } catch (ClassNotFoundException | ClassCastException e) {
-                Log.w("FTAG",e.toString());
+            } catch (Exception e) {
             }
         }
         return fragments;
     }
 
+
+    private static <T extends SubFragment> Fragment buildFragment(long locationId, Class<T> tClass) {
+        return SubFragment.getInstanceById(locationId, tClass);
+    }
 
     private static List<String> getAvailableTypesList(LocationItem locationItem) {
         List<String> typesList = new LinkedList<>();
@@ -48,15 +49,11 @@ public abstract class SubFragmentFactory {
         Iterator<String> fields = node.fieldNames();
         while (fields.hasNext()) {
             String field = fields.next();
-            if (field.startsWith(keyWord) && node.path(field).asBoolean()) {
-                String className = field.replaceFirst(keyWord, StringUtils.EMPTY).concat(fragmentPostfix);
+            if (field.startsWith(KEY_WORD) && node.path(field).asBoolean()) {
+                String className = field.replaceFirst(KEY_WORD, StringUtils.EMPTY).concat(FRAGMENT_POSTFIX);
                 typesList.add(className);
             }
         }
         return typesList;
-    }
-
-    private static <T extends SubFragment> Fragment buildFragment(long locationId, Class<T> tClass) {
-        return SubFragment.getInstanceById(locationId, tClass);
     }
 }
